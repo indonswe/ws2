@@ -20,10 +20,16 @@ const DemoRouter = () => {
                 <Header/>
                 <Switch>
                     <Route exact path="/" component={Home} />
-                    <Route path="/welcome" component={Welcome} />
+                    <Route path="/home" component={Welcome} />
                     <Route path="/form" component={RegisterForm} />
 
                     <Redirect from="/contactUs" to="/about" />
+                    <Route path="/cruddemo">
+                        <CrudDemo />
+                    </Route>
+                    <Route path="/person">
+                        <Person />
+                    </Route>
                     <Route path="/about">
                         <About />
                     </Route>
@@ -51,7 +57,7 @@ const Header = () => {
         <Fragment>
             <ul className="nav nav-pills nav-fill bg-dark text-white">
                 <li className="nav-item">
-                    <Link className="nav-link" to="/">Welcome</Link>
+                    <Link className="nav-link text-white" to="/">React</Link>
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/home">Home</Link>
@@ -63,7 +69,10 @@ const Header = () => {
                     <Link className="nav-link" to="/about">About</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/cruddemo">Cruddemo</Link>
+                    <Link className="nav-link" to="/cruddemo">Crud</Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/cruddemo">Sign up</Link>
                 </li>
             </ul>
         </Fragment>
@@ -73,7 +82,14 @@ const Header = () => {
 
 const Home = () => {
     // useHistory allows developer access to the React Routers history object
-    const history = useHistory();
+    
+    return (
+        <Fragment>
+            Welcome
+        </Fragment>
+    );
+
+    /*const history = useHistory();
 
     return (
         <Fragment>
@@ -82,13 +98,13 @@ const Home = () => {
             <a href="#" className="btn btn-outline-danger" onClick={() => history.goBack()} >Back</a>
             <a href="#" className="btn btn-outline-primary" onClick={() => history.push('/about')} >Redirect to About Us</a>
         </Fragment>
-    );
+    );*/
 };
 
 const Welcome = () => {
     return (
         <Fragment>
-            Welcome Page
+            You are on the homepage
         </Fragment>
     );
 };
@@ -104,7 +120,7 @@ const About = () => {
 const Person = () => {
   return (
       <Fragment>
-          The person page
+          <h3>The person Page</h3>
       </Fragment>
   );
 };
@@ -112,7 +128,7 @@ const Person = () => {
 const NotFound = () => {
     return (
         <Fragment>
-            Page Noy Found
+            Page Not Found
         </Fragment>
     );
 };
