@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useHistory, useParams, useLocation, Redirect } from "react-router-dom";
+import CrudDemo from './CrudDemo';
+
+//import CrudDemo from "./CrudDemo";
+
 //  npm install react-router-dom@5.3.0
 
 // step 1 create component
@@ -22,6 +26,9 @@ const DemoRouter = () => {
                     <Redirect from="/contactUs" to="/about" />
                     <Route path="/about">
                         <About />
+                    </Route>
+                    <Route path="/cruddemo">
+                        <CrudDemo />
                     </Route>
 
                     <Redirect from="/personInformation/:id" to="/data/:id" />
@@ -54,6 +61,9 @@ const Header = () => {
                 </li>
                 <li className="nav-item">
                     <Link className="nav-link" to="/about">About</Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/cruddemo">Cruddemo</Link>
                 </li>
             </ul>
         </Fragment>
