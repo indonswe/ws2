@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Fragment } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link, useHistory, useParams, useLocation, Redirect } from "react-router-dom";
 import CrudDemo from './CrudDemo';
+import { useForm } from 'react-hook-form';
+import InputToForm from './InputToForm';
+
 
 //import CrudDemo from "./CrudDemo";
 
@@ -14,6 +17,20 @@ import CrudDemo from './CrudDemo';
 //<Router> is responsible to create a history object
 //<Switch> component is responsible to render only the first child or <Rout> that matches the path
 const DemoRouter = () => {
+
+    const [skills, setSkills] = useState([]);
+    const [loadData, setLoadData] = useState(false);
+    const [showDetails, setShowDetails] = useState(false);
+    const studentDefaultData = {id: 0, Name: "", Title: "", Email: "" }
+    const [student, setStudent] = useState(studentDefaultData);
+    const [persons, setPersons] = useState([]);
+    const [message,setMessage] = useState();
+    const [error,setError] = useState();
+    const [id,setId] = useState(0);
+    const PersonDefaultData = {id: 0, Name: "", Title: "", Email: "" }
+    const [person, setPerson] = useState(PersonDefaultData);
+
+
     return (
         <div className="container">
             <Router>
@@ -33,8 +50,8 @@ const DemoRouter = () => {
                     <Route path="/about">
                         <About />
                     </Route>
-                    <Route path="/cruddemo">
-                        <CrudDemo />
+                    <Route path="/input">
+                        <InputToForm />
                     </Route>
 
                     <Redirect from="/personInformation/:id" to="/data/:id" />
@@ -72,7 +89,7 @@ const Header = () => {
                     <Link className="nav-link" to="/cruddemo">Crud</Link>
                 </li>
                 <li className="nav-item">
-                    <Link className="nav-link" to="/cruddemo">Sign up</Link>
+                    <Link className="nav-link" to="/input">Sign up</Link>
                 </li>
             </ul>
         </Fragment>
@@ -132,6 +149,9 @@ const NotFound = () => {
         </Fragment>
     );
 };
+
+
+
 
 
 const RegisterForm = () => {

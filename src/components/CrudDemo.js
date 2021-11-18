@@ -74,7 +74,7 @@ const CrudDemo = () => {
     };
     
     // step 2: devide component to small components
-    const ShowData = (props) => {
+    /*const ShowData = (props) => {
         return (
             <Fragment>
                 {
@@ -87,59 +87,8 @@ const CrudDemo = () => {
                 }
             </Fragment>
         );
-    };
-    const Form = () => {
-        const { register, handleSubmit, formState: {errors} } = useForm();
-
-        const saveData = (data) => {
-            console.log("------------------");
-            console.log(data);
-            console.log("------------------");
-            const id = 'A_'+ Math.random().toString(36).substr(2, 9);
-            const title = data.title; 
-            const skill = { id, title };
-            skills.push(skill);
-            setLoadData(!loadData); // !false => true
-            console.log("SKILLS:" , skills);
-        };
-
-        return (
-            <Fragment>
-                <h5>My Form</h5>
-                <br/>
-               <form onSubmit={handleSubmit(saveData)}>
-                    <div className="row">
-                        <div className="col">
-                            <input type="text" className="form-control" {...register("firstName", { required: true } )}  placeholder="Enter First Name" />
-                            {errors.title && <span className="text-danger">Firstname is required!</span>}
-                        </div>
-                        <div className="col">
-                            <input type="text" className="form-control" {...register("lastName", { required: true } )}  placeholder="Enter Last Name" />
-                            {errors.title && <span className="text-danger">Lastname is required!</span>}
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col">
-                        <input type="text" className="form-control" {...register("email", { required: true } )}  placeholder="Enter Email" />
-                            {errors.title && <span className="text-danger">Email is required!</span>}
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col">
-                        <input type="text" className="form-control" {...register("title", { required: true } )}  placeholder="Enter Title" />
-                            {errors.title && <span className="text-danger">Title is required!</span>}
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col">
-                        <br/>
-                            <button type="submit" className="btn btn-success">+</button>
-                        </div>
-                    </div>
-                </form> 
-            </Fragment>
-        );
-    };
+    };*/
+    
 
     const TableHeader = () => {
         return (
@@ -284,6 +233,114 @@ const CrudDemo = () => {
         
     
     };
+    const sendPostRequest = async (props) => {
+        //const data = {email: 'test.test@test.se', firstName: 'Test12',lastName: 'Test 22', title: 'Test Title'};
+        console.log("start sendPostRequest");
+        await axios.post(baseURL,props.person.data).then(res => {
+            console.log("RESPONSE", res);
+            if(res.status === 201){
+                setPersons(res.data);
+                setMessage('Operation is Done!');
+            } else {
+                setMessage('API ERROR' + res.status);
+            }
+            setError();
+        }).catch(err => {
+            console.log("ERROR " , err);
+            // update error state
+            if(err.response){
+                console.log("ERROR RESPONSE " , err.response);
+
+                setError(err.response.data.statusText);
+            } else {
+                setError(err.message);
+            }
+            setMessage();
+        });
+        console.log("end sendPostRequest");
+    };
+
+
+    const Form = () => {
+
+        const { register, handleSubmit, formState: {errors} } = useForm();
+    
+            const saveData = (data) => {
+                
+                console.log("start sendPostRequest");
+                //<sendPostRequest person = {data}/>;
+                console.log("start sendPostRequest");
+         axios.post(baseURL,data).then(res => {
+            console.log("RESPONSE", res);
+            if(res.status === 201){
+                setPersons(res.data);
+                setMessage('Operation is Done!');
+            } else {
+                setMessage('API ERROR' + res.status);
+            }
+            setError();
+        }).catch(err => {
+            console.log("ERROR " , err);
+            // update error state
+            if(err.response){
+                console.log("ERROR RESPONSE " , err.response);
+
+                setError(err.response.data.statusText);
+            } else {
+                setError(err.message);
+            }
+            setMessage();
+        });
+        console.log("end sendPostRequest");
+    
+                console.log("-dhdhd------------");
+                console.log(data);
+                console.log("-----dsfhjgjfgkf----------");
+                const id = 'A_'+ Math.random().toString(36).substr(2, 9);
+                const title = data.title; 
+                const skill = { id, title };
+                skills.push(skill);
+                setLoadData(!loadData); // !false => true
+                console.log("SKILLS:" , skills);
+            };
+    
+            return (
+                <Fragment>
+                    <h5>My Form</h5>
+                    <br/>
+                   <form onSubmit={handleSubmit(saveData)}>
+                        <div className="row">
+                            <div className="col">
+                                <input type="text" className="form-control" {...register("firstName", { required: true } )}  placeholder="Enter First Name" />
+                                {errors.title && <span className="text-danger">Firstname is required!</span>}
+                            </div>
+                            <div className="col">
+                                <input type="text" className="form-control" {...register("lastName", { required: true } )}  placeholder="Enter Last Name" />
+                                {errors.title && <span className="text-danger">Lastname is required!</span>}
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                            <input type="text" className="form-control" {...register("email", { required: true } )}  placeholder="Enter Email" />
+                                {errors.title && <span className="text-danger">Email is required!</span>}
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                            <input type="text" className="form-control" {...register("title", { required: true } )}  placeholder="Enter Title" />
+                                {errors.title && <span className="text-danger">Title is required!</span>}
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                            <br/>
+                                <button type="submit" className="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </form> 
+                </Fragment>
+            );
+        };
 
     return (
         <div className="container">
@@ -293,8 +350,9 @@ const CrudDemo = () => {
             <TableHeader />
             <TableRow list={persons} />
             </table>
-            
             <ShowSpecificDetails/>
+            <br/>
+            <Form />
         </div>
     );
 };
