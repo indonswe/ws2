@@ -18,10 +18,14 @@ const CrudDemo = () => {
     const [message,setMessage] = useState();
     const [error,setError] = useState();
     const [id,setId] = useState(0);
+    const PersonDefaultData = {id: 0, Name: "", Title: "", Email: "" }
+    const [person, setPerson] = useState(PersonDefaultData);
 
 
     useEffect(()=> {
         console.log("useEffect has been executed!");
+        
+        sendGetRequest();
         // call API get skills list and then set it into the skill list
         //const mySkills = [{id:'A1', title: 'Java SE'}, {id:'A2', title:'Java EE'}];
         //setSkills(mySkills);
@@ -53,6 +57,22 @@ const CrudDemo = () => {
         });
         console.log("end sendGetRequest");
     };
+    
+    const ShowPersonData = (props) => {
+        return (
+            <Fragment>
+                {
+                  props.persons.map(
+                      person => (
+                        <ul className="row pb-2" key={person.id}>
+                            <li className="form-lable">{person.id}</li>
+                        </ul>
+                  ))  
+                }
+            </Fragment>
+        );
+    };
+    
     // step 2: devide component to small components
     const ShowData = (props) => {
         return (
@@ -151,7 +171,7 @@ const CrudDemo = () => {
                 props.list.map((student) => (
                 <tr key={student.id}>
                     <td>{student.id}</td>
-                    <td>{student.name}</td>
+                    <td>{student.firstName}</td>
                     <td>{student.email}</td>
                     <td><TableAction student={student} /></td>
                 </tr>
@@ -188,16 +208,51 @@ const CrudDemo = () => {
     
     };
 
+    const ShowSpecificDetails = () => {
+
+        console.log("Pressed", showDetails);
+        if(showDetails){
+            return(
+                <div className="card">
+                    <div className="card-header bg-info text-white">
+                        Student Information
+                    </div>
+                    <div className="card-body">
+                        <h5 className="card-title">Country and City</h5>
+                        <p className="card-text">ID: {person.id}</p>
+                        <p className="card-text">Name: {person.firstName}</p>
+                        <p className="card-text">Email: {person.email}</p>
+                    </div>
+                    <div className="card-footer">
+                        <button type="button" className="btn btn-danger" onClick={()=> {setShowDetails(false); setStudent(studentDefaultData)}}>Close</button>
+                    </div>
+                </div>
+            );
+        } else {
+            return ("");
+        }
+        
+    
+    };
+
     return (
         <div className="container">
             <h3>Fullstack Developer Skills</h3>
+            
             <ShowData skills={skills} />
+            <ShowPersonData persons={persons} />
             <Form />
             <br/>
             <table className="table .table-striped">
             <TableHeader />
-            <TableRow list={skills} />
+            <TableRow list={persons} />
             </table>
+            <div className="row">
+                <div className="col m-2">
+                    <button type="button" className="btn btn-info" onClick={sendGetRequest} >Fetch All Data</button>
+                </div>               
+            </div>
+            <ShowSpecificDetails/>
         </div>
     );
 };
