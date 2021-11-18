@@ -2,6 +2,9 @@ import React, { useEffect } from 'react';
 import { Fragment } from 'react';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react/cjs/react.development';
+import axios from 'axios';
+
+const baseURL= "http://localhost:8080/api/v1/person/";
 
 // step1
 // create a functional component
@@ -11,6 +14,11 @@ const CrudDemo = () => {
     const [showDetails, setShowDetails] = useState(false);
     const studentDefaultData = {id: 0, Name: "", Title: "", Email: "" }
     const [student, setStudent] = useState(studentDefaultData);
+    const [persons, setPersons] = useState([]);
+    const [message,setMessage] = useState();
+    const [error,setError] = useState();
+    const [id,setId] = useState(0);
+
 
     useEffect(()=> {
         console.log("useEffect has been executed!");
@@ -20,7 +28,31 @@ const CrudDemo = () => {
 
     }, [loadData]);
 
-
+    const sendGetRequest = async () => { // async keyword is used tp make a function asynchronous.
+        console.log("start sendGetRequest");
+        await axios.get(baseURL).then(res => { // await keyword asks the executor to wait for the defined task to be executed
+            console.log("DATA", res.data);
+            console.log("STATUS", res.status);
+            // update person state
+            if(res.status === 200){
+                setPersons(res.data);
+                setMessage('Operation is Done!');
+            } else {
+                setMessage('API ERROR' + res.status);
+            }
+            setError();
+        }).catch( err => {
+            console.log("ERROR " , err);
+            // update error state
+            if(err.message){
+                setError(err.message);
+            } else {
+                setError(err);
+            }
+            setMessage();
+        });
+        console.log("end sendGetRequest");
+    };
     // step 2: devide component to small components
     const ShowData = (props) => {
         return (
