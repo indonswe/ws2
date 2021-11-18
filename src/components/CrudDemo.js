@@ -156,7 +156,7 @@ const CrudDemo = () => {
         const showData = () => {
             setShowDetails(true);
             console.log("SHOW DATA",props.student);
-            setStudent(props.student);
+            setPerson(props.person);
         };
     
         return (<button type="button" className="btn btn-primary" onClick={showData} >Details</button>);
@@ -173,7 +173,7 @@ const CrudDemo = () => {
                     <td>{student.id}</td>
                     <td>{student.firstName}</td>
                     <td>{student.email}</td>
-                    <td><TableAction student={student} /></td>
+                    <td><TableAction person={student} /></td>
                 </tr>
                     ) )
             }
