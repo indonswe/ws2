@@ -165,9 +165,43 @@ const CrudDemo = () => {
 
     const TableDelete = (props) => {
 
+        
+        
         const showData = () => {
             
-            
+            console.log("start DeleteRequestById");
+        let validation = true;
+        console.log(validation, props.person.id);
+        if(props.person.id === 0){
+            setError('Param is not valid!');
+            validation = false;
+        }
+        if(validation){
+            console.log("Validation");
+            axios.delete(`${baseURL}${props.person.id}`).then(res => {
+                console.log("RESPONSE", res);
+                if(res.status === 200){
+                    setPersons(res.data);
+                    setMessage('Operation is Done!');
+                } else {
+                    setMessage('API ERROR' + res.status);
+                }
+                setError();
+            }).catch(err => {
+                console.log("ERROR " , err);
+                // update error state
+                if(err.response){
+                    console.log("ERROR RESPONSE " , err.response);
+    
+                    setError(err.response.data.statusText);
+                } else {
+                    setError(err.message);
+                }
+                setMessage();
+            });
+        }
+        
+        console.log("end sendDeleteRequestById");
             
             /*setShowDetails(true);
             console.log("SHOW DATA",props.student);
