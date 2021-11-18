@@ -163,6 +163,21 @@ const CrudDemo = () => {
     
     };
 
+    const TableDelete = (props) => {
+
+        const showData = () => {
+            
+            
+            
+            /*setShowDetails(true);
+            console.log("SHOW DATA",props.student);
+            setPerson(props.person);*/
+        };
+    
+        return (<button type="button" className="btn btn-primary" onClick={showData} >Delete</button>);
+    
+    };
+
 
     const TableRow = (props) => {
         return(
@@ -174,6 +189,7 @@ const CrudDemo = () => {
                     <td>{student.firstName}</td>
                     <td>{student.email}</td>
                     <td><TableAction person={student} /></td>
+                    <td><TableDelete person={student} /></td>
                 </tr>
                     ) )
             }
@@ -237,21 +253,13 @@ const CrudDemo = () => {
 
     return (
         <div className="container">
-            <h3>Fullstack Developer Skills</h3>
-            
-            <ShowData skills={skills} />
-            <ShowPersonData persons={persons} />
-            <Form />
+            <h3>Person list</h3>
             <br/>
             <table className="table .table-striped">
             <TableHeader />
             <TableRow list={persons} />
             </table>
-            <div className="row">
-                <div className="col m-2">
-                    <button type="button" className="btn btn-info" onClick={sendGetRequest} >Fetch All Data</button>
-                </div>               
-            </div>
+            
             <ShowSpecificDetails/>
         </div>
     );
